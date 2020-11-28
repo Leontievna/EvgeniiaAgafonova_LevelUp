@@ -1,11 +1,17 @@
 import vehicles.Bus;
 import vehicles.Taxi;
 import vehicles.Vehicle;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Carpark - класс описывает парк общественного транспорта.
+ *
+ * @version 1.00 28 Nov 2020
+ * @author Агафонова Евгения
+ */
 public class Carpark {
+
     private ArrayList<Vehicle> allVehicles;
     private ArrayList<Taxi> taxis;
     private ArrayList<Bus> buses;
@@ -36,7 +42,6 @@ public class Carpark {
         for (Vehicle vehicle: allVehicles) {
              result += vehicle.getPrise();
         }
-
         return result;
     }
 
@@ -58,16 +63,11 @@ public class Carpark {
         ArrayList<Bus> result = new ArrayList<Bus>();
 
         for (Bus bus: buses) {
-            if (minPassengersNum <= bus.getPassengerNumber() &&
-                    bus.getPassengerNumber() <= maxPassengersNum){
+            if ((minPassengersNum <= bus.getPassengerNumber()) &&
+                    (bus.getPassengerNumber() <= maxPassengersNum)){
                 result.add(bus);
             }
         }
-
         return result;
     }
-
-
-
-
 }

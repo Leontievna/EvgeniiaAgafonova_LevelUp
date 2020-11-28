@@ -1,5 +1,11 @@
 package vehicles;
 
+/**
+ * Vehicle - содержит характеристики автомобилей парка общественного транспорта.
+ *
+ * @version 1.00 28 Nov 2020
+ * @author Агафонова Евгения
+ */
 public class Vehicle implements Comparable{
 
     public enum FuelTypes {

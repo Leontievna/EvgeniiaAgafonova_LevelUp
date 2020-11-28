@@ -1,5 +1,11 @@
 package vehicles;
 
+/**
+ * Bus - описывает автобусы парка общественного транспорта.
+ *
+ * @version 1.00 28 Nov 2020
+ * @author Агафонова Евгения
+ */
 public class Bus extends Vehicle {
 
     private int floorNumbers;
@@ -38,5 +44,4 @@ public class Bus extends Vehicle {
     public void setCheckTaker(boolean checkTaker) {
         this.checkTaker = checkTaker;
     }
-
 }

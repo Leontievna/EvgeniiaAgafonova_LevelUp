@@ -1,5 +1,11 @@
 package vehicles;
 
+/**
+ * Taxi - описывает легковые автомобили парка общественного транспорта.
+ *
+ * @version 1.00 28 Nov 2020
+ * @author Агафонова Евгения
+ */
 public class Taxi extends Vehicle {
 
     public enum CarTypes {
