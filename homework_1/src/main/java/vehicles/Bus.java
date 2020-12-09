@@ -3,7 +3,7 @@ package vehicles;
 /**
  * Bus - описывает автобусы парка общественного транспорта.
  *
- * @version 1.00 28 Nov 2020
+ * @version 1.1 09 Dec 2020
  * @author Агафонова Евгения
  */
 public class Bus extends Vehicle {
@@ -33,7 +33,10 @@ public class Bus extends Vehicle {
         return checkTaker;
     }
 
-    public void setFloorNumbers(int floorNumbers) {
+    public void setFloorNumbers (int floorNumbers) throws BusException {
+        if (floorNumbers < 1 ){
+            throw new BusException(floorNumbers, "The number of floors can't be less then 1");
+        }
         this.floorNumbers = floorNumbers;
     }
 

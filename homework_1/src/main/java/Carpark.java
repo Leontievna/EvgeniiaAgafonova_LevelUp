@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Carpark - класс описывает парк общественного транспорта.
+ * Carpark - выполняет добавление объектов в автопарк, поиск и их отображение по заданным параметрам.
  *
- * @version 1.00 28 Nov 2020
+ * @version 1.1 09 Dec 2020
  * @author Агафонова Евгения
  */
 public class Carpark {
@@ -16,13 +16,18 @@ public class Carpark {
     private ArrayList<Taxi> taxis;
     private ArrayList<Bus> buses;
 
-    public Carpark(){
+    public Carpark() {
         allVehicles = new ArrayList<Vehicle>();
         taxis = new ArrayList<Taxi>();
         buses = new ArrayList<Bus>();
     }
 
-    public Bus addBus(int passengerNumber, double fuelTankVolume, Vehicle.FuelTypes fuelTypes, String numberplate, double prise, int fuelConsumption){
+    public Bus addBus(int passengerNumber, double fuelTankVolume, Vehicle.FuelTypes fuelTypes,
+                      String numberplate, double prise, int fuelConsumption) throws CarparkException {
+
+        if (passengerNumber < 1 )
+            throw new CarparkException(passengerNumber, "The number of passengers can't be less then 1");
+
         Bus bus = new Bus(passengerNumber, fuelTankVolume, fuelTypes, numberplate, prise, fuelConsumption);
         buses.add(bus);
         allVehicles.add(bus);
@@ -70,4 +75,19 @@ public class Carpark {
         }
         return result;
     }
+
+    public Vehicle getVehicle(String numberplate) throws VehicleException {
+        Vehicle result = null;
+        for (Vehicle vehicle: allVehicles) {
+            if (vehicle.getNumberplate() == numberplate) {
+                result = vehicle;
+                break;
+            }
+        }
+        if (result == null) {
+            throw new VehicleException(numberplate, "This vehicle doesn't exist in the carpark");
+        }
+        return result;
+    }
+
 }
