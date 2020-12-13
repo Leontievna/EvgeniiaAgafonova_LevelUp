@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Common suite">
+
+    <suite-files>
+        <suite-file path="CalculatorSubstractDivideSuite.xml"/>
+        <suite-file path="CalculatorSumMultiplySuite.xml"/>
+        <suite-file path="CalculatorTrigonometrySuite.xml"/>
+        <suite-file path="CalculatorOtherArithmeticOperation.xml"/>
+    </suite-files>
+
+</suite>

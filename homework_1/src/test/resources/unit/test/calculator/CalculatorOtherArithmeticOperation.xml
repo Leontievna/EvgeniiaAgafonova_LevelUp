@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Calculator other arithmetic operations">
+
+    <test name="Before After Annotation Test">
+        <classes>
+            <class name="SqrtTest"/>
+        </classes>
+    </test>
+
+    <test name="Before After Annotation Test2">
+        <classes>
+            <class name="PowTest"/>
+        </classes>
+    </test>
+
+</suite>

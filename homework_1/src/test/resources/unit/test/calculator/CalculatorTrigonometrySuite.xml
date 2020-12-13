@@ -1,0 +1,28 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Calculator trigonometry suite">
+
+    <test name="Before After Annotation Test">
+        <classes>
+            <class name="SineTest"/>
+        </classes>
+    </test>
+
+    <test name="Before After Annotation Test2">
+        <classes>
+            <class name="CosTest"/>
+        </classes>
+    </test>
+
+    <test name="Before After Annotation Test3">
+        <classes>
+            <class name="TgTest"/>
+        </classes>
+    </test>
+
+    <test name="Before After Annotation Test4">
+        <classes>
+            <class name="CtgTest"/>
+        </classes>
+    </test>
+
+</suite>

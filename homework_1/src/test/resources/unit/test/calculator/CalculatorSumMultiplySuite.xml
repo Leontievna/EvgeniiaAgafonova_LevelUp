@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Calculator multiply and sum suite">
+
+    <test name="Before After Annotation Test">
+        <classes>
+            <class name="MultiplyTest"/>
+        </classes>
+    </test>
+
+    <test name="Before After Annotation Test2">
+        <classes>
+            <class name="SumTest"/>
+        </classes>
+    </test>
+
+</suite>
