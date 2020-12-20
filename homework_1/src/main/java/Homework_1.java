@@ -1,4 +1,5 @@
 import vehicles.Bus;
+import vehicles.BusException;
 import vehicles.Taxi;
 import vehicles.Vehicle;
 import java.util.ArrayList;
@@ -6,13 +7,19 @@ import java.util.ArrayList;
 /**
  * Homework_1 - выполнение второго домашнего задания.
  *
- * @version 1.00 28 Nov 2020
+ * @version 1.1 09 Dec 2020
  * @author Агафонова Евгения
  */
 public class Homework_1 {
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws BusException {
+        try {
+            createCarpark();
+        } catch (CarparkException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void createCarpark() throws CarparkException, BusException {
         /* Добавляю в автопарк автобусы */
         Carpark carpark = new Carpark();
         carpark.addBus(49, 480, Vehicle.FuelTypes.DIESEL, "OO123M",25000000,25);
@@ -20,7 +27,7 @@ public class Homework_1 {
         carpark.addBus(18, 150, Vehicle.FuelTypes.PETROL_92, "BB963M",4000000,18);
         carpark.addBus(18, 200, Vehicle.FuelTypes.PETROL_92, "OX612X",5150000,19);
 
-        Bus doubleBus = carpark.addBus(80, 500, Vehicle.FuelTypes.DIESEL, "OO123M",28000000,28);
+        Bus doubleBus = carpark.addBus(10, 500, Vehicle.FuelTypes.DIESEL, "OO123M",28000000,28);
         doubleBus.setFloorNumbers(2);
         doubleBus.setHasToilet(true);
 
@@ -45,6 +52,23 @@ public class Homework_1 {
         for(Bus bus: buses) {
             System.out.println("The numberplate of the bus is " + bus.getNumberplate() +
                     " has " + bus.getPassengerNumber() + " passengers" );
+        }
+
+        try{
+            carpark.getVehicle("T335OO");
+        } catch (VehicleException e) {
+            e.printStackTrace();
+        }
+
+        try{
+            carpark.addBus(0, 200, Vehicle.FuelTypes.PETROL_92, "OX612X",5150000,19);
+        } catch (CarparkException e) {
+            e.printStackTrace();
+        }
+        try{
+            doubleBus.setFloorNumbers(0);
+        } catch (BusException e) {
+            e.printStackTrace();
         }
     }
 }
