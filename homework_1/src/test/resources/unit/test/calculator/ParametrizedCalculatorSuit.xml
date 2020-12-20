@@ -1,0 +1,70 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Parametrized Calculator">
+
+    <test name="Parametrized Calculator exclude multiply division substraction">
+        <parameter name="a" value="2.0"/>
+        <parameter name="b" value="6.0"/>
+        <parameter name="expected" value="8.0"/>
+        <classes>
+            <class name="ParametrizedCalculatorTest">
+                <methods>
+                    <exclude name="parametrizedMultiplyTest"/>
+                    <exclude name="parametrizedSubTest"/>
+                    <exclude name="parametrizedDivideTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Parametrized Calculator include multiply ">
+        <parameter name="a" value="2.0"/>
+        <parameter name="b" value="6.0"/>
+        <parameter name="expected" value="12.0"/>
+        <classes>
+            <class name="ParametrizedCalculatorTest">
+                <methods>
+                    <include name="parametrizedMultiplyTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Parametrized Calculator include multiply without a value">
+        <parameter name="b" value="6.0"/>
+        <parameter name="expected" value="18.0"/>
+        <classes>
+            <class name="ParametrizedCalculatorTest">
+                <methods>
+                    <include name="parametrizedMultiplyTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Parametrized Calculator include divide">
+        <parameter name="a" value="12.0"/>
+        <parameter name="b" value="6.0"/>
+        <parameter name="expected" value="2.0"/>
+        <classes>
+            <class name="ParametrizedCalculatorTest">
+                <methods>
+                    <include name="parametrizedDivideTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Parametrized Calculator include substrction without a value">
+        <parameter name="b" value="6.0"/>
+        <parameter name="expected" value="4.0"/>
+        <classes>
+            <class name="ParametrizedCalculatorTest">
+                <methods>
+                    <include name="parametrizedSubTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+
+</suite>
