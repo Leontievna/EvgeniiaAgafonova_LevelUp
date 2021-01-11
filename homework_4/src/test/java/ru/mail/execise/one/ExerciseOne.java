@@ -13,7 +13,14 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class SignInAccount {
+/**
+ * ExerciseOne - класс выполняет вход в аккаунт,
+ * создание черновика письма, его отправку и выход из аккаунта.
+ *
+ * @version 1.00 11 Jan 2021
+ * @author Агафонова Евгения
+ */
+public class ExerciseOne {
 
     private WebDriver driver;
 
@@ -34,7 +41,6 @@ public class SignInAccount {
 
     @Test
     public void signInToAccount() {
-
         WebElement loginInput = driver.findElement(By.xpath("//*[@name='login']"));
         JavascriptExecutor executor = (JavascriptExecutor)driver;
         executor.executeScript("arguments[0].click();", loginInput);
@@ -67,7 +73,6 @@ public class SignInAccount {
     }
     @Test(dependsOnMethods="signInToAccount")
     public void createDraftLetter() {
-
         WebDriverWait wait = new WebDriverWait(driver, 5);
 
         WebElement folderDraftLetter = wait
@@ -115,7 +120,6 @@ public class SignInAccount {
 
     @Test(dependsOnMethods="createDraftLetter")
     public void sendDraftLetter() {
-
         WebDriverWait wait = new WebDriverWait(driver, 5);
 
         WebElement lastDraft = driver.findElement(By.cssSelector(".ll-crpt"));
@@ -125,7 +129,6 @@ public class SignInAccount {
 
         WebElement buttonSendLetter = driver.findElement(By.xpath("//span[text()='Отправить']"));
         buttonSendLetter.click();
-
 
         WebElement closePopupLetterSended = wait
                 .until(ExpectedConditions
@@ -152,5 +155,3 @@ public class SignInAccount {
         assertEquals(bodySentLetter.getText(), "test -- Evgeniia Test");
     }
 }
-
-
