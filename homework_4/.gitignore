@@ -1,5 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
-/.allure/
+/.allure
+/allure-results
 /.idea
 
 ### Java template
