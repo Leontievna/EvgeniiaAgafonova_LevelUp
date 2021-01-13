@@ -66,7 +66,7 @@ public class ExerciseOne {
         Sleep.sleep(3000);
 
         assertEquals(driver.getCurrentUrl(),
-                "https://e.mail.ru/inbox/?back=1&afterReload=1");
+                "https://e.mail.ru/messages/inbox/?back=1&afterReload=1");
 
         WebElement userName = driver.findElement(By.id("PH_user-email"));
         assertEquals(userName.getText(),"test_2020_levelup@mail.ru");

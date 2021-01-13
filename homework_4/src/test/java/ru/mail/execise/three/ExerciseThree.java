@@ -65,7 +65,7 @@ public class ExerciseThree {
         Sleep.sleep(3000);
 
         assertEquals(driver.getCurrentUrl(),
-                "https://e.mail.ru/inbox/?back=1&afterReload=1");
+                "https://e.mail.ru/messages/inbox/?back=1&afterReload=1");
 
         WebElement userName = driver.findElement(By.id("PH_user-email"));
         assertEquals(userName.getText(),"test_2020_levelup@mail.ru");
@@ -73,9 +73,10 @@ public class ExerciseThree {
 
     @Test(dependsOnMethods="signInToAccount")
     public void sendLetter() {
-        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
 
-        WebElement createLetter = driver.findElement(By.partialLinkText("Написать письмо"));
+        WebElement createLetter = wait
+                .until(ExpectedConditions.elementToBeClickable(By.partialLinkText("Написать письмо")));
         createLetter.click();
 
         Sleep.sleep(1500);

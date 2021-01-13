@@ -65,7 +65,7 @@ public class ExerciseTwo {
         Sleep.sleep(3000);
 
         assertEquals(driver.getCurrentUrl(),
-                "https://e.mail.ru/inbox/?back=1&afterReload=1");
+                "https://e.mail.ru/messages/inbox/?back=1&afterReload=1");
 
         WebElement userName = driver.findElement(By.id("PH_user-email"));
         assertEquals(userName.getText(),"test_2020_levelup@mail.ru");
@@ -73,14 +73,16 @@ public class ExerciseTwo {
 
     @Test(dependsOnMethods="signInToAccount")
     public void sentLetter() {
-        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
 
-        WebElement createLetter = driver.findElement(By.partialLinkText("Написать письмо"));
+        WebElement createLetter = wait
+                .until(ExpectedConditions.elementToBeClickable(By.partialLinkText("Написать письмо")));
         createLetter.click();
 
         Sleep.sleep(1500);
 
-        WebElement receiverName =driver.findElement(By.xpath("//input[@tabindex='100']"));
+        WebElement receiverName = wait
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@tabindex='100']")));
         receiverName.sendKeys("test_2020_levelup@mail.ru");
         receiverName.sendKeys(Keys.RETURN);
 
@@ -107,7 +109,7 @@ public class ExerciseTwo {
         folderSendedLetters.click();
 
         WebElement receiverNameCheck = wait
-                .until(ExpectedConditions.elementToBeClickable(By.cssSelector(".ll-crpt")));
+                .until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ll-crpt")));
         assertEquals(receiverNameCheck.getText(), "test_2020_levelup@mail.ru");
 
         WebElement themeDraftLetter = driver.findElement(By.cssSelector(".ll-sj__normal"));
