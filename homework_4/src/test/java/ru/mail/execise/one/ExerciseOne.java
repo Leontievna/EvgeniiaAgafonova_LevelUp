@@ -18,7 +18,7 @@ import static org.testng.Assert.assertTrue;
  * ExerciseOne - класс выполняет вход в аккаунт,
  * создание черновика письма, его отправку и выход из аккаунта.
  *
- * @version 1.01 14 Jan 2021
+ * @version 1.03 14 Jan 2021
  * @author Агафонова Евгения
  */
 public class ExerciseOne {
@@ -44,6 +44,8 @@ public class ExerciseOne {
     public void sendDraft() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
 
+        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+
         WebElement loginInput = driver.findElement(By.name("login"));
         loginInput.sendKeys("test_2020_levelup");
 
@@ -55,8 +57,6 @@ public class ExerciseOne {
 
         WebElement passInputButton = driver.findElement(By.cssSelector("button.second-button.svelte-no02r"));
         passInputButton.click();
-
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         assertEquals(driver.getCurrentUrl(),
                 "https://mail.ru/");
@@ -72,14 +72,16 @@ public class ExerciseOne {
         WebElement createLetter = driver.findElement(By.partialLinkText("Написать письмо"));
         createLetter.click();
 
-
-        WebElement receiverName =driver.findElement(By.xpath("(//*[@class=\"container--H9L5q size_s--3_M-_\"])[1]"));
+        WebElement receiverName = wait
+                .until(ExpectedConditions
+                        .elementToBeClickable(By
+                                .cssSelector(".head_container--3W05z .container--H9L5q.size_s--3_M-_")));
         receiverName.sendKeys("jane-utest@ya.ru");
         receiverName.sendKeys(Keys.RETURN);
 
         WebElement themeLetter = wait
                 .until(ExpectedConditions.visibilityOfElementLocated
-                        (By.xpath("(//*[@class=\"container--H9L5q size_s--3_M-_\"])[2]")));
+                        (By.cssSelector(".subject__container--HWnat .container--H9L5q.size_s--3_M-_")));
         themeLetter.sendKeys("test");
 
         WebElement bodyLetter = driver.findElement(By.xpath("//div[@role=\"textbox\"]//div"));
@@ -93,25 +95,27 @@ public class ExerciseOne {
                 .cssSelector(("button[title=\"Закрыть\"]")));
         closePopupNewLetter.click();
 
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
         WebElement senderIcon = driver
                 .findElement(By.className("stop-animate"));
         senderIcon.isDisplayed();
 
-        WebElement receiverNameCheck = driver.findElement(By.xpath("//span[@class=\"ll-crpt\"]"));
+        WebElement receiverNameCheck = wait
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class=\"ll-crpt\"]")));
         assertEquals(receiverNameCheck.getAttribute("title"), "jane-utest@ya.ru");
 
-        WebElement themeDraftLetter = driver.findElement(By.xpath("//span[@class=\"ll-sj__normal\"]"));
+        WebElement themeDraftLetter = wait
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class=\"ll-sj__normal\"]")));
         assertEquals(themeDraftLetter.getText(), "test");
 
-        WebElement bodyDraftLetter = driver.findElement(By.xpath("//span[@class=\"ll-sp__normal\"]"));
+        WebElement bodyDraftLetter = wait
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class=\"ll-sp__normal\"]")));
         assertEquals(bodyDraftLetter.getText(), "test -- Evgeniia Test");
 
         WebElement lastDraft = driver.findElement(By.cssSelector(".ll-crpt"));
         lastDraft.click();
 
-        WebElement buttonSendLetter = driver.findElement(By.xpath("//span[text()='Отправить']"));
+        WebElement buttonSendLetter = wait
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Отправить']")));
         buttonSendLetter.click();
 
         WebElement closePopupLetterSended = wait
@@ -125,7 +129,8 @@ public class ExerciseOne {
                         .visibilityOfElementLocated(By.cssSelector(".dataset__empty")));
         assertTrue(messageEmptyFolder.isDisplayed());
 
-        WebElement folderSendedLetters = driver.findElement(By.partialLinkText("Отправленные"));
+        WebElement folderSendedLetters = wait
+                .until(ExpectedConditions.elementToBeClickable(By.partialLinkText("Отправленные")));
         folderSendedLetters.click();
 
         WebElement receiverNameSendedLetter = wait

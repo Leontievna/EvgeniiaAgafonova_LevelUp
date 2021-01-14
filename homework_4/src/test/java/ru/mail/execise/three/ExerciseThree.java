@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 /**
  * ExerciseThree - класс выполняет вход в аккаунт,
@@ -43,29 +44,19 @@ public class ExerciseThree {
     public void sendLetterToMyself() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
 
+        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+
         WebElement loginInput = driver.findElement(By.xpath("//*[@name='login']"));
-        JavascriptExecutor executor = (JavascriptExecutor)driver;
-        executor.executeScript("arguments[0].click();", loginInput);
         loginInput.sendKeys("test_2020_levelup");
 
         WebElement accountInputButton = driver.findElement(By.cssSelector("button.button.svelte-no02r"));
-        JavascriptExecutor executor2 = (JavascriptExecutor)driver;
-        executor2.executeScript("arguments[0].click();", accountInputButton);
         accountInputButton.click();
 
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-
         WebElement passInput = driver.findElement(By.xpath("//*[@name='password']"));
-        JavascriptExecutor executor3 = (JavascriptExecutor)driver;
-        executor3.executeScript("arguments[0].click();", passInput);
         passInput.sendKeys("levelup2020");
 
         WebElement passInputButton = driver.findElement(By.cssSelector("button.second-button.svelte-no02r"));
-        JavascriptExecutor executor4 = (JavascriptExecutor)driver;
-        executor4.executeScript("arguments[0].click();", passInputButton);
         passInputButton.click();
-
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
         assertEquals(driver.getCurrentUrl(),
                 "https://mail.ru/");
@@ -78,9 +69,9 @@ public class ExerciseThree {
                 .until(ExpectedConditions.elementToBeClickable(By.partialLinkText("Написать письмо")));
         createLetter.click();
 
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-
-        WebElement receiverName = driver.findElement(By.xpath("(//*[@class=\"container--H9L5q size_s--3_M-_\"])[1]"));
+        WebElement receiverName = wait
+                .until(ExpectedConditions.elementToBeClickable(By
+                        .xpath("(//*[@class=\"container--H9L5q size_s--3_M-_\"])[1]")));
         receiverName.sendKeys("test_2020_levelup@mail.ru");
         receiverName.sendKeys(Keys.RETURN);
 
@@ -92,9 +83,8 @@ public class ExerciseThree {
         WebElement bodyLetter = driver.findElement(By.xpath("//div[@role=\"textbox\"]//div"));
         bodyLetter.sendKeys("test");
 
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-
-        WebElement buttonSendLetter = driver.findElement(By.xpath("//span[text()='Отправить']"));
+        WebElement buttonSendLetter = wait
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Отправить']")));
         buttonSendLetter.click();
 
         WebElement closePopupLetterSended = wait
@@ -110,16 +100,16 @@ public class ExerciseThree {
                 .until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("Письма себе")));
         folderLettersToMyself.click();
 
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        assertTrue(wait.until(ExpectedConditions
+                .textToBe(By.xpath("(//div[@class=\"llc__content\"]//span[@class=\"ll-crpt\"])[1]"),
+                        "Evgeniia Test")));
 
-        WebElement receiverNameCheck = wait
-                .until(ExpectedConditions.elementToBeClickable(By.className("ll-crpt")));
-        assertEquals(receiverNameCheck.getText(), "Evgeniia Test");
-
-        WebElement themeDraftLetter = driver.findElement(By.className("ll-sj__normal"));
+        WebElement themeDraftLetter = wait
+                .until(ExpectedConditions.elementToBeClickable(By.className("ll-sj__normal")));
         assertEquals(themeDraftLetter.getText(), "test");
 
-        WebElement bodyDraftLetter = driver.findElement(By.className("ll-sp__normal"));
+        WebElement bodyDraftLetter = wait
+                .until(ExpectedConditions.elementToBeClickable(By.className("ll-sp__normal")));
         assertEquals(bodyDraftLetter.getText(), "test -- Evgeniia Test");
     }
 }
