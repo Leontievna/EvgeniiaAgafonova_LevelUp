@@ -8,7 +8,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import utils.Sleep;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.assertEquals;
 
@@ -16,7 +17,7 @@ import static org.testng.Assert.assertEquals;
  * ExerciseThree - класс выполняет вход в аккаунт,
  * создание письма, его отправку себе и выход из аккаунта.
  *
- * @version 1.00 11 Jan 2021
+ * @version 1.01 14 Jan 2021
  * @author Агафонова Евгения
  */
 public class ExerciseThree {
@@ -39,7 +40,9 @@ public class ExerciseThree {
     }
 
     @Test
-    public void signInToAccount() {
+    public void sendLetterToMyself() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+
         WebElement loginInput = driver.findElement(By.xpath("//*[@name='login']"));
         JavascriptExecutor executor = (JavascriptExecutor)driver;
         executor.executeScript("arguments[0].click();", loginInput);
@@ -50,7 +53,7 @@ public class ExerciseThree {
         executor2.executeScript("arguments[0].click();", accountInputButton);
         accountInputButton.click();
 
-        Sleep.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
         WebElement passInput = driver.findElement(By.xpath("//*[@name='password']"));
         JavascriptExecutor executor3 = (JavascriptExecutor)driver;
@@ -62,38 +65,34 @@ public class ExerciseThree {
         executor4.executeScript("arguments[0].click();", passInputButton);
         passInputButton.click();
 
-        Sleep.sleep(3000);
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
         assertEquals(driver.getCurrentUrl(),
-                "https://e.mail.ru/messages/inbox/?back=1&afterReload=1");
+                "https://mail.ru/");
 
-        WebElement userName = driver.findElement(By.id("PH_user-email"));
+        WebElement userName = wait
+                .until(ExpectedConditions.elementToBeClickable(By.id("PH_user-email")));
         assertEquals(userName.getText(),"test_2020_levelup@mail.ru");
-    }
-
-    @Test(dependsOnMethods="signInToAccount")
-    public void sendLetter() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
 
         WebElement createLetter = wait
                 .until(ExpectedConditions.elementToBeClickable(By.partialLinkText("Написать письмо")));
         createLetter.click();
 
-        Sleep.sleep(1500);
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
-        WebElement receiverName = driver.findElement(By.xpath("//input[@tabindex='100']"));
+        WebElement receiverName = driver.findElement(By.xpath("(//*[@class=\"container--H9L5q size_s--3_M-_\"])[1]"));
         receiverName.sendKeys("test_2020_levelup@mail.ru");
         receiverName.sendKeys(Keys.RETURN);
 
         WebElement themeLetter = wait
                 .until(ExpectedConditions.visibilityOfElementLocated
-                        (By.xpath("//input[@tabindex='400']")));
+                        (By.xpath("(//*[@class=\"container--H9L5q size_s--3_M-_\"])[2]")));
         themeLetter.sendKeys("test");
 
         WebElement bodyLetter = driver.findElement(By.xpath("//div[@role=\"textbox\"]//div"));
         bodyLetter.sendKeys("test");
 
-        Sleep.sleep(1200);
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
         WebElement buttonSendLetter = driver.findElement(By.xpath("//span[text()='Отправить']"));
         buttonSendLetter.click();
@@ -103,11 +102,6 @@ public class ExerciseThree {
                         .visibilityOfElementLocated(By.xpath("//span[@class=\"button2 button2_has-ico " +
                                 "button2_close button2_pure button2_clean button2_short button2_hover-support\"]")));
         closePopupLetterSended.click();
-    }
-
-    @Test(dependsOnMethods="sendLetter")
-    public void checkingSentLetterToMyself() {
-        WebDriverWait wait = new WebDriverWait(driver, 5);
 
         WebElement folderSendedLetters = driver.findElement(By.partialLinkText("Входящие"));
         folderSendedLetters.click();
@@ -116,14 +110,16 @@ public class ExerciseThree {
                 .until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("Письма себе")));
         folderLettersToMyself.click();
 
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+
         WebElement receiverNameCheck = wait
-                .until(ExpectedConditions.elementToBeClickable(By.cssSelector(".ll-crpt")));
+                .until(ExpectedConditions.elementToBeClickable(By.className("ll-crpt")));
         assertEquals(receiverNameCheck.getText(), "Evgeniia Test");
 
-        WebElement themeDraftLetter = driver.findElement(By.cssSelector(".ll-sj__normal"));
+        WebElement themeDraftLetter = driver.findElement(By.className("ll-sj__normal"));
         assertEquals(themeDraftLetter.getText(), "test");
 
-        WebElement bodyDraftLetter = driver.findElement(By.cssSelector(".ll-sp__normal"));
+        WebElement bodyDraftLetter = driver.findElement(By.className("ll-sp__normal"));
         assertEquals(bodyDraftLetter.getText(), "test -- Evgeniia Test");
     }
 }
