@@ -18,7 +18,7 @@ import static org.testng.Assert.assertTrue;
  * ExerciseThree - класс выполняет вход в аккаунт,
  * создание письма, его отправку себе и выход из аккаунта.
  *
- * @version 1.01 14 Jan 2021
+ * @version 1.03 14 Jan 2021
  * @author Агафонова Евгения
  */
 public class ExerciseThree {
