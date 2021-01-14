@@ -16,7 +16,7 @@ import static org.testng.Assert.assertEquals;
  * ExerciseTwo - класс выполняет вход в аккаунт,
  * создание письма, его отправку и выход из аккаунта.
  *
- * @version 1.01 14 Jan 2021
+ * @version 1.02 14 Jan 2021
  * @author Агафонова Евгения
  */
 public class ExerciseTwo {
@@ -32,14 +32,14 @@ public class ExerciseTwo {
     }
 
     @AfterClass
-    public void sendLetter(){
+    public void singOut(){
         WebElement exitAccountButton = driver.findElement(By.cssSelector("[xname=\"clb14767676\"]"));
         exitAccountButton.click();
         driver.quit();
     }
 
     @Test
-    public void signInToAccount() {
+    public void sendLetter() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
 
         WebElement loginInput = driver.findElement(By.name("login"));
