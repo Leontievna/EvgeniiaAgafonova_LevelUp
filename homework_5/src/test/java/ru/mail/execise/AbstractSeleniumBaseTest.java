@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 
 import java.io.FileInputStream;
@@ -15,6 +16,9 @@ public abstract class AbstractSeleniumBaseTest {
 
 //    protected static WebDriver driver;
     protected WebDriver driver;
+    private WebDriverWait wait;
+
+
 
     @BeforeClass
     public void setUp() {
@@ -23,6 +27,7 @@ public abstract class AbstractSeleniumBaseTest {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get(System.getProperty("url"));
+        wait = new WebDriverWait(driver, 10);
     }
 
     @AfterClass
