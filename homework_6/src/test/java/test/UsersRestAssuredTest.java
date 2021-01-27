@@ -22,7 +22,7 @@ public class UsersRestAssuredTest extends ApiBaseTest {
     @DataProvider
     public Object[][] dataProvider() {
         return new Object[][] {
-                { "koperkin@mail.ru", "Petr", "Male", "Inactive"}
+                { "kopirkin@mail.ru", "Petr", "Male", "Inactive"}
         };
     }
 
