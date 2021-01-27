@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Allure Rest Assured">
+
+    <test name="Allure Tests">
+        <classes>
+            <class name="test.CommentsRestAssuredTest"/>
+            <class name="test.PostsRestAssuredTest"/>
+            <class name="test.UsersRestAssuredTest"/>
+        </classes>
+    </test>
+
+</suite>
